@@ -1,0 +1,119 @@
+{
+	"name": "libts-csrfx-auth",
+	"version": "0.1.0",
+	"description": "Minimal TypeScript auth handler for web sessions, CSRF tokens, and cookie persistence. Inspired by Rust's cekunit-client.",
+	"keywords": [
+		"libts",
+		"auth",
+		"csrf",
+		"session",
+		"cookies",
+		"typescript",
+		"web-automation",
+		"login",
+		"http-client",
+		"bun",
+		"node"
+	],
+	"homepage": "https://github.com/neuxdotdev/libts-csrfx-auth#readme",
+	"bugs": {
+		"url": "https://github.com/neuxdotdev/libts-csrfx-auth/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/neuxdotdev/libts-csrfx-auth.git"
+	},
+	"license": "AGPL-3.0",
+	"author": "neuxdotdev <neuxdev1@gmail.com>",
+	"type": "module",
+	"main": "./build/index.cjs",
+	"module": "./build/index.mjs",
+	"types": "./build/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./build/index.d.ts",
+			"import": "./build/index.mjs",
+			"require": "./build/index.cjs",
+			"default": "./build/index.mjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"build",
+		"README.md",
+		"LICENSE"
+	],
+	"sideEffects": false,
+	"engines": {
+		"node": ">=18.0.0",
+		"bun": ">=1.0.0"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	},
+	"packageManager": "bun@1.2.0",
+	"scripts": {
+		"dev": "rollup -c rollup.config.mjs -w",
+		"dev:lib": "rollup -c rollup.config.mjs -w",
+		"clean": "rm -rf build node_modules/.cache",
+		"typecheck": "tsc --noEmit",
+		"build:ts": "tsc",
+		"build:bundle": "rollup -c rollup.config.mjs",
+		"build:bundle:prod": "NODE_ENV=production rollup -c rollup.config.mjs",
+		"build:bundle:analyze": "ANALYZE=true rollup -c rollup.config.mjs",
+		"build:bundle:small": "PROFILE=small NODE_ENV=production rollup -c rollup.config.mjs",
+		"build:bundle:perf": "PROFILE=performance NODE_ENV=production rollup -c rollup.config.mjs",
+		"build:lib": "bun run typecheck && bun run build:bundle",
+		"build:lib:prod": "bun run typecheck && bun run build:bundle:prod",
+		"build:lib:analyze": "bun run build:bundle:analyze",
+		"format": "prettier . --write",
+		"format:check": "prettier . --check",
+		"format:build": "bun ./scripts/format-build.ts",
+		"lint": "eslint lib --ext .ts",
+		"lint:fix": "eslint lib --ext .ts --fix",
+		"clean-code": "rmcm -l js -i -c 0 -r ./lib --verbose && bun run format",
+		"clean-code-all-root": "rmcm -l js -i -r -c 0 ./lib/** && bun run format",
+		"test": "bun test",
+		"test:watch": "bun test --watch",
+		"test:coverage": "bun test --coverage",
+		"prepublishOnly": "bun run clean && bun run build:lib:prod",
+		"prepare": "husky || true",
+		"version:patch": "bun version patch",
+		"version:minor": "bun version minor",
+		"version:major": "bun version major",
+		"release": "bun run prepublishOnly && npm publish",
+		"release:dry": "bun run prepublishOnly && npm publish --dry-run",
+		"rebuild": "bun run clean && bun run build:lib:prod && bun run format:check",
+		"rebuild:fast": "bun run clean && bun run build:lib:prod"
+	},
+	"devDependencies": {
+		"@rollup/plugin-commonjs": "^29.0.2",
+		"@rollup/plugin-json": "^6.1.0",
+		"@rollup/plugin-node-resolve": "^16.0.3",
+		"@rollup/plugin-replace": "^6.0.3",
+		"@rollup/plugin-terser": "^1.0.0",
+		"@rollup/plugin-typescript": "^12.3.0",
+		"@types/bun": "^1.2.0",
+		"@types/node": "^22.15.0",
+		"@typescript-eslint/eslint-plugin": "^8.32.0",
+		"@typescript-eslint/parser": "^8.32.0",
+		"eslint": "^9.25.0",
+		"eslint-config-prettier": "^10.1.2",
+		"eslint-plugin-import": "^2.31.0",
+		"husky": "^9.1.7",
+		"minimatch": "^10.2.5",
+		"prettier": "^3.5.3",
+		"rollup": "^4.60.1",
+		"rollup-plugin-copy": "^3.5.0",
+		"rollup-plugin-dts": "^6.4.1",
+		"rollup-plugin-filesize": "^10.0.0",
+		"rollup-plugin-generate-package-json": "^3.2.0",
+		"rollup-plugin-license": "^3.7.0",
+		"rollup-plugin-node-externals": "^8.1.2",
+		"rollup-plugin-peer-deps-external": "^2.2.4",
+		"rollup-plugin-visualizer": "^7.0.1",
+		"tslib": "^2.8.1",
+		"typescript": "^5.8.3"
+	}
+}
