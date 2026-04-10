@@ -140,9 +140,9 @@ The library uses `loadEnv()` to read variables from `.env` (project root) and th
 
 | Variable        | Required | Default  | Validation                                                       |
 | --------------- | -------- | -------- | ---------------------------------------------------------------- |
-| `BASE_URL`      | ✅       | –        | Must be `http://` or `https://`, no trailing slash required.     |
-| `LOGIN_PATH`    | ❌       | `login`  | No `?` or `#`, cannot be empty string.                           |
-| `LOGOUT_PATH`   | ❌       | `logout` | No `?` or `#`, cannot be empty string.                           |
+| `BASE_URL`      |          | –        | Must be `http://` or `https://`, no trailing slash required.     |
+| `LOGIN_PATH`    |          | `login`  | No `?` or `#`, cannot be empty string.                           |
+| `LOGOUT_PATH`   |          | `logout` | No `?` or `#`, cannot be empty string.                           |
 | `USER_EMAIL`    | ❌\*     | –        | Basic email regex (`local@domain.tld`). Empty string is ignored. |
 | `USER_PASSWORD` | ❌\*     | –        | Cannot be empty string if provided.                              |
 
@@ -484,23 +484,23 @@ class AuthError extends Error {
 
 | Code                  | Retryable | Typical HTTP status  | Description                                         |
 | --------------------- | --------- | -------------------- | --------------------------------------------------- |
-| `INVALID_CREDENTIALS` | ❌        | –                    | Email or password empty / malformed.                |
-| `CSRF_NOT_FOUND`      | ✅        | –                    | Token missing in HTML.                              |
-| `CSRF_FETCH_FAILED`   | ✅        | –                    | GET login page failed (network/4xx/5xx).            |
-| `CSRF_EXPIRED`        | ❌        | 419                  | Token expired (server response).                    |
-| `LOGIN_FAILED`        | ❌        | 4xx (except 419/422) | Login POST returned non‑2xx, non‑retryable.         |
-| `LOGOUT_FAILED`       | ❌        | 4xx (except 419/422) | Logout POST failed.                                 |
-| `NOT_AUTHENTICATED`   | ❌        | –                    | No valid session in cache.                          |
-| `NETWORK_ERROR`       | ✅        | –                    | DNS, TLS, socket, or `fetch` throw.                 |
-| `TIMEOUT`             | ✅        | –                    | Request aborted due to timeout.                     |
-| `CACHE_ERROR`         | ❌        | –                    | File system read/write error.                       |
-| `VALIDATION_ERROR`    | ❌        | 400, 422             | Form validation error (e.g., wrong email/password). |
-| `TOO_MANY_REQUESTS`   | ✅        | 429                  | Rate limited.                                       |
-| `SERVER_ERROR`        | ✅        | 5xx                  | Server internal error.                              |
-| `UNAUTHORIZED`        | ❌        | 401                  | Not authenticated (missing/invalid session).        |
-| `FORBIDDEN`           | ❌        | 403                  | Authenticated but not allowed.                      |
-| `NOT_FOUND`           | ❌        | 404                  | Endpoint does not exist.                            |
-| `UNKNOWN`             | ❌        | –                    | Catch‑all.                                          |
+| `INVALID_CREDENTIALS` |           | –                    | Email or password empty / malformed.                |
+| `CSRF_NOT_FOUND`      |           | –                    | Token missing in HTML.                              |
+| `CSRF_FETCH_FAILED`   |           | –                    | GET login page failed (network/4xx/5xx).            |
+| `CSRF_EXPIRED`        |           | 419                  | Token expired (server response).                    |
+| `LOGIN_FAILED`        |           | 4xx (except 419/422) | Login POST returned non‑2xx, non‑retryable.         |
+| `LOGOUT_FAILED`       |           | 4xx (except 419/422) | Logout POST failed.                                 |
+| `NOT_AUTHENTICATED`   |           | –                    | No valid session in cache.                          |
+| `NETWORK_ERROR`       |           | –                    | DNS, TLS, socket, or `fetch` throw.                 |
+| `TIMEOUT`             |           | –                    | Request aborted due to timeout.                     |
+| `CACHE_ERROR`         |           | –                    | File system read/write error.                       |
+| `VALIDATION_ERROR`    |           | 400, 422             | Form validation error (e.g., wrong email/password). |
+| `TOO_MANY_REQUESTS`   |           | 429                  | Rate limited.                                       |
+| `SERVER_ERROR`        |           | 5xx                  | Server internal error.                              |
+| `UNAUTHORIZED`        |           | 401                  | Not authenticated (missing/invalid session).        |
+| `FORBIDDEN`           |           | 403                  | Authenticated but not allowed.                      |
+| `NOT_FOUND`           |           | 404                  | Endpoint does not exist.                            |
+| `UNKNOWN`             |           | –                    | Catch‑all.                                          |
 
 ### Retryable vs Authentication Errors
 
