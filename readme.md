@@ -2,7 +2,6 @@
 
 > **Minimal TypeScript auth handler for web sessions, CSRF tokens, and cookie persistence — inspired by Rust's cekunit-client.**
 
-
 <p align="center">
   <a href="https://www.npmjs.com/package/libts-csrfx-auth" target="_blank" rel="noopener">
     <img src="https://img.shields.io/npm/v/libts-csrfx-auth.svg?style=flat-square&logo=npm&logoColor=white&color=cb3837" alt="npm version" height="20">
@@ -168,11 +167,11 @@ The library uses `loadEnv()` to read variables from `.env` (project root) and th
 
 | Variable        | Required | Default  | Validation                                                       |
 | --------------- | -------- | -------- | ---------------------------------------------------------------- |
-| `BASE_URL`      |          | –        | Must be `http://` or `https://`, no trailing slash required.     |
-| `LOGIN_PATH`    |          | `login`  | No `?` or `#`, cannot be empty string.                           |
-| `LOGOUT_PATH`   |          | `logout` | No `?` or `#`, cannot be empty string.                           |
-| `USER_EMAIL`    | ❌\*     | –        | Basic email regex (`local@domain.tld`). Empty string is ignored. |
-| `USER_PASSWORD` | ❌\*     | –        | Cannot be empty string if provided.                              |
+| `BASE_URL`      | [x]      | –        | Must be `http://` or `https://`, no trailing slash required.     |
+| `LOGIN_PATH`    | [ ]      | `login`  | No `?` or `#`, cannot be empty string.                           |
+| `LOGOUT_PATH`   | [ ]      | `logout` | No `?` or `#`, cannot be empty string.                           |
+| `USER_EMAIL`    | [ ]      | –        | Basic email regex (`local@domain.tld`). Empty string is ignored. |
+| `USER_PASSWORD` | [ ]      | –        | Cannot be empty string if provided.                              |
 
 > _`AuthClient` requires both email and password to be non‑empty (throws `INVALID_CREDENTIALS` otherwise)._
 
