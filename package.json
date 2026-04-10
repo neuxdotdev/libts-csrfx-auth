@@ -67,8 +67,8 @@
 		"build:lib": "bun run typecheck && bun run build:bundle",
 		"build:lib:prod": "bun run typecheck && bun run build:bundle:prod",
 		"build:lib:analyze": "bun run build:bundle:analyze",
-		"format": "prettier . --write",
-		"format:check": "prettier . --check",
+		"format": "bunx prettier . --write",
+		"format:check": "bunx prettier . --write --fix",
 		"format:build": "bun ./scripts/format-build.ts",
 		"lint": "eslint lib --ext .ts",
 		"lint:fix": "eslint lib --ext .ts --fix",
@@ -113,6 +113,7 @@
 		"rollup-plugin-node-externals": "^8.1.2",
 		"rollup-plugin-peer-deps-external": "^2.2.4",
 		"rollup-plugin-visualizer": "^7.0.1",
+		"tough-cookie": "^6.0.1",
 		"tslib": "^2.8.1",
 		"typescript": "^5.8.3"
 	}

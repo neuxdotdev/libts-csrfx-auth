@@ -1,0 +1,84 @@
+diff --git a/bun.lock b/bun.lock
+index a716602..c5e64be 100644
+--- a/bun.lock
++++ b/bun.lock
+@@ -30,6 +30,7 @@
+         "rollup-plugin-node-externals": "^8.1.2",
+         "rollup-plugin-peer-deps-external": "^2.2.4",
+         "rollup-plugin-visualizer": "^7.0.1",
++        "tough-cookie": "^6.0.1",
+         "tslib": "^2.8.1",
+         "typescript": "^5.8.3",
+       },
+@@ -946,8 +947,14 @@
+ 
+     "tinyglobby": ["tinyglobby@0.2.16", "", { "dependencies": { "fdir": "^6.5.0", "picomatch": "^4.0.4" } }, "sha512-pn99VhoACYR8nFHhxqix+uvsbXineAasWm5ojXoN8xEwK5Kd3/TrhNn1wByuD52UxWRLy8pu+kRMniEi6Eq9Zg=="],
+ 
++    "tldts": ["tldts@7.0.28", "", { "dependencies": { "tldts-core": "^7.0.28" }, "bin": { "tldts": "bin/cli.js" } }, "sha512-+Zg3vWhRUv8B1maGSTFdev9mjoo8Etn2Ayfs4cnjlD3CsGkxXX4QyW3j2WJ0wdjYcYmy7Lx2RDsZMhgCWafKIw=="],
++
++    "tldts-core": ["tldts-core@7.0.28", "", {}, "sha512-7W5Efjhsc3chVdFhqtaU0KtK32J37Zcr9RKtID54nG+tIpcY79CQK/veYPODxtD/LJ4Lue66jvrQzIX2Z2/pUQ=="],
++
+     "to-regex-range": ["to-regex-range@5.0.1", "", { "dependencies": { "is-number": "^7.0.0" } }, "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ=="],
+ 
++    "tough-cookie": ["tough-cookie@6.0.1", "", { "dependencies": { "tldts": "^7.0.5" } }, "sha512-LktZQb3IeoUWB9lqR5EWTHgW/VTITCXg4D21M+lvybRVdylLrRMnqaIONLVb5mav8vM19m44HIcGq4qASeu2Qw=="],
++
+     "ts-api-utils": ["ts-api-utils@2.5.0", "", { "peerDependencies": { "typescript": ">=4.8.4" } }, "sha512-OJ/ibxhPlqrMM0UiNHJ/0CKQkoKF243/AEmplt3qpRgkW8VG7IfOS41h7V8TjITqdByHzrjcS/2si+y4lIh8NA=="],
+ 
+     "tsconfig-paths": ["tsconfig-paths@3.15.0", "", { "dependencies": { "@types/json5": "^0.0.29", "json5": "^1.0.2", "minimist": "^1.2.6", "strip-bom": "^3.0.0" } }, "sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg=="],
+diff --git a/lib/lib.ts b/lib/lib.ts
+index 134e883..ddf1272 100644
+--- a/lib/lib.ts
++++ b/lib/lib.ts
+@@ -1,2 +1,27 @@
+-export const sum = (a: number, b: number): number => a + b
+-export const multiply = (a: number, b: number): number => a * b
++export { AuthClient, type LoginOptions } from './auth/login.js'
++export { LogoutClient, type LogoutOptions } from './auth/logout.js'
++export * from './preloader.js'
++export {
++	CacheManager,
++	type SessionData,
++	type Cookie,
++	isSessionFresh,
++	sessionWithCsrfToken,
++} from './utils/session.js'
++export { extractCsrfToken } from './utils/csrf.js'
++export { parseCookies, buildCookieHeader, parseSetCookie } from './utils/cookies.js'
++export { fetchWithRetry, type FetchOptions } from './utils/http.js'
++export { EnvConfig, loadEnv, type EnvConfigOptions, type EnvVars } from './handler/config.js'
++export {
++	AuthError,
++	AuthErrorCode,
++	type AuthErrorCode as AuthErrorCodeType,
++} from './handler/error.js'
++export const VERSION = '0.1.0' as const
++export const NAME = 'libts-csrfx-auth' as const
++export function buildInfo(): {
++	readonly version: typeof VERSION
++	readonly name: typeof NAME
++} {
++	return { version: VERSION, name: NAME }
++}
+diff --git a/package.json b/package.json
+index db2c6ad..dd6a555 100644
+--- a/package.json
++++ b/package.json
+@@ -67,8 +67,8 @@
+ 		"build:lib": "bun run typecheck && bun run build:bundle",
+ 		"build:lib:prod": "bun run typecheck && bun run build:bundle:prod",
+ 		"build:lib:analyze": "bun run build:bundle:analyze",
+-		"format": "prettier . --write",
+-		"format:check": "prettier . --check",
++		"format": "bunx prettier . --write",
++		"format:check": "bunx prettier . --write --fix",
+ 		"format:build": "bun ./scripts/format-build.ts",
+ 		"lint": "eslint lib --ext .ts",
+ 		"lint:fix": "eslint lib --ext .ts --fix",
+@@ -113,6 +113,7 @@
+ 		"rollup-plugin-node-externals": "^8.1.2",
+ 		"rollup-plugin-peer-deps-external": "^2.2.4",
+ 		"rollup-plugin-visualizer": "^7.0.1",
++		"tough-cookie": "^6.0.1",
+ 		"tslib": "^2.8.1",
+ 		"typescript": "^5.8.3"
+ 	}
