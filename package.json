@@ -1,6 +1,6 @@
 {
 	"name": "libts-csrfx-auth",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Minimal TypeScript auth handler for web sessions, CSRF tokens, and cookie persistence. Inspired by Rust's cekunit-client.",
 	"keywords": [
 		"libts",
