@@ -40,8 +40,8 @@
 	},
 	"files": [
 		"build",
-		"README.md",
-		"LICENSE"
+		"readme.md",
+		"license"
 	],
 	"sideEffects": false,
 	"engines": {
