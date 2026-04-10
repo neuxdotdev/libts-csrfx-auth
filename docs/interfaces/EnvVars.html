@@ -1,0 +1,815 @@
+<!doctype html>
+<html class="default" lang="en" data-base="../">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<title>EnvVars | CSRF-X Auth Library - v0.1.1</title>
+		<meta name="description" content="Documentation for CSRF-X Auth Library" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../assets/style.css" />
+		<link rel="stylesheet" href="../assets/highlight.css" />
+		<script defer src="../assets/main.js"></script>
+		<script async src="../assets/icons.js" id="tsd-icons-script"></script>
+		<script async src="../assets/search.js" id="tsd-search-script"></script>
+		<script async src="../assets/navigation.js" id="tsd-nav-script"></script>
+	</head>
+	<body>
+		<script>
+			document.documentElement.dataset.theme = localStorage.getItem('tsd-theme') || 'os'
+			document.body.style.display = 'none'
+			setTimeout(
+				() => (window.app ? app.showPage() : document.body.style.removeProperty('display')),
+				500,
+			)
+		</script>
+		<header class="tsd-page-toolbar">
+			<div class="tsd-toolbar-contents container">
+				<a href="../index.html" class="title">CSRF-X Auth Library - v0.1.1</a>
+				<div id="tsd-toolbar-links">
+					<a href="https://github.com/neuxdotdev/libts-csrfx-auth">GitHub</a
+					><a href="https://www.npmjs.com/package/libts-csrfx-auth">npm</a>
+				</div>
+				<button id="tsd-search-trigger" class="tsd-widget" aria-label="Search">
+					<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+						<use href="../assets/icons.svg#icon-search"></use>
+					</svg>
+				</button>
+				<dialog id="tsd-search" aria-label="Search">
+					<input
+						role="combobox"
+						id="tsd-search-input"
+						aria-controls="tsd-search-results"
+						aria-autocomplete="list"
+						aria-expanded="true"
+						autocapitalize="off"
+						autocomplete="off"
+						placeholder="Search the docs"
+						maxlength="100"
+					/>
+					<ul role="listbox" id="tsd-search-results"></ul>
+					<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+						<div>Preparing search index...</div>
+					</div>
+				</dialog>
+				<a
+					href="#"
+					class="tsd-widget menu"
+					id="tsd-toolbar-menu-trigger"
+					data-toggle="menu"
+					aria-label="Menu"
+					><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+						<use href="../assets/icons.svg#icon-menu"></use></svg
+				></a>
+			</div>
+		</header>
+		<div class="container container-main">
+			<div class="col-content">
+				<div class="tsd-page-title">
+					<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+						<li><a href="" aria-current="page">EnvVars</a></li>
+					</ul>
+					<h1>Interface EnvVars</h1>
+				</div>
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<p>
+							Environment variables required or optionally used by the authentication
+							library.
+						</p>
+					</div>
+					<div class="tsd-comment tsd-typography">
+						<div class="tsd-tag-remarks">
+							<h4 class="tsd-anchor-link" id="remarks">
+								Remarks<a
+									href="#remarks"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<p>
+								Only <code>BASE_URL</code> is mandatory. All other fields are
+								optional but may be required<br />
+								by specific clients (e.g., <code>{@link AuthClient}</code> needs
+								<code>USER_EMAIL</code> and <code>USER_PASSWORD</code>).
+							</p>
+						</div>
+						<div class="tsd-tag-example">
+							<h4 class="tsd-anchor-link" id="example">
+								Example<a
+									href="#example"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<pre><code class="ts"><span class="hl-0">// Minimal valid EnvVars</span><br/><span class="hl-2">{ </span><span class="hl-11">BASE_URL</span><span class="hl-2">: </span><span class="hl-3">&quot;https://example.com&quot;</span><span class="hl-2"> }</span>
+</code><button type="button">Copy</button></pre>
+						</div>
+						<div class="tsd-tag-example">
+							<h4 class="tsd-anchor-link" id="example-1">
+								Example<a
+									href="#example-1"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<pre><code class="ts"><span class="hl-0">// Full configuration</span><br/><span class="hl-2">{</span><br/><span class="hl-2">  </span><span class="hl-11">BASE_URL</span><span class="hl-2">: </span><span class="hl-3">&quot;https://example.com&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-11">LOGIN_PATH</span><span class="hl-2">: </span><span class="hl-3">&quot;signin&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-11">LOGOUT_PATH</span><span class="hl-2">: </span><span class="hl-3">&quot;signout&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-11">USER_EMAIL</span><span class="hl-2">: </span><span class="hl-3">&quot;admin@example.com&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-11">USER_PASSWORD</span><span class="hl-2">: </span><span class="hl-3">&quot;secret123&quot;</span><br/><span class="hl-2">}</span><br/><br/><span class="hl-2">@</span><span class="hl-10">0.1</span><span class="hl-2">.</span><span class="hl-10">1</span>
+</code><button type="button">Copy</button></pre>
+						</div>
+						<div class="tsd-tag-since">
+							<h4 class="tsd-anchor-link" id="since">
+								Since<a href="#since" aria-label="Permalink" class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<p>0.1.1</p>
+						</div>
+						<div class="tsd-tag-see">
+							<h4 class="tsd-anchor-link" id="see">
+								See<a href="#see" aria-label="Permalink" class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<ul>
+								<li>
+									<a href="../functions/loadEnv.html" class="tsd-kind-function"
+										>loadEnv</a
+									>
+								</li>
+								<li>
+									<a href="../classes/EnvConfig.html" class="tsd-kind-class"
+										>EnvConfig</a
+									>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<div class="tsd-signature">
+					<span class="tsd-signature-keyword">interface</span>
+					<span class="tsd-kind-interface">EnvVars</span>
+					<span class="tsd-signature-symbol">{</span><br />    <a
+						class="tsd-kind-property"
+						href="#base_url"
+						>BASE_URL</a
+					><span class="tsd-signature-symbol">:</span>
+					<span class="tsd-signature-type">string</span
+					><span class="tsd-signature-symbol">;</span><br />    <a
+						class="tsd-kind-property"
+						href="#login_path"
+						>LOGIN_PATH</a
+					><span class="tsd-signature-symbol">?:</span>
+					<span class="tsd-signature-type">string</span
+					><span class="tsd-signature-symbol">;</span><br />    <a
+						class="tsd-kind-property"
+						href="#logout_path"
+						>LOGOUT_PATH</a
+					><span class="tsd-signature-symbol">?:</span>
+					<span class="tsd-signature-type">string</span
+					><span class="tsd-signature-symbol">;</span><br />    <a
+						class="tsd-kind-property"
+						href="#user_email"
+						>USER_EMAIL</a
+					><span class="tsd-signature-symbol">?:</span>
+					<span class="tsd-signature-type">string</span
+					><span class="tsd-signature-symbol">;</span><br />    <a
+						class="tsd-kind-property"
+						href="#user_password"
+						>USER_PASSWORD</a
+					><span class="tsd-signature-symbol">?:</span>
+					<span class="tsd-signature-type">string</span
+					><span class="tsd-signature-symbol">;</span><br /><span
+						class="tsd-signature-symbol"
+						>}</span
+					>
+				</div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>
+							Defined in
+							<a
+								href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/handler/env.ts#L41"
+								>handler/env.ts:41</a
+							>
+						</li>
+					</ul>
+				</aside>
+				<section class="tsd-panel-group tsd-index-group">
+					<section class="tsd-panel tsd-index-panel">
+						<details class="tsd-index-content tsd-accordion" open>
+							<summary class="tsd-accordion-summary tsd-index-summary">
+								<svg
+									width="20"
+									height="20"
+									viewBox="0 0 24 24"
+									fill="none"
+									aria-hidden="true"
+								>
+									<use href="../assets/icons.svg#icon-chevronDown"></use>
+								</svg>
+								<h5 class="tsd-index-heading uppercase">Index</h5>
+							</summary>
+							<div class="tsd-accordion-details">
+								<section class="tsd-index-section">
+									<h3 class="tsd-index-heading">Properties</h3>
+									<div class="tsd-index-list">
+										<a href="#base_url" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Property"
+											>
+												<use
+													href="../assets/icons.svg#icon-1024"
+												></use></svg
+											><span>BASE_<wbr />URL</span></a
+										>
+										<a href="#login_path" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Property"
+											>
+												<use
+													href="../assets/icons.svg#icon-1024"
+												></use></svg
+											><span>LOGIN_<wbr />PATH?</span></a
+										>
+										<a href="#logout_path" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Property"
+											>
+												<use
+													href="../assets/icons.svg#icon-1024"
+												></use></svg
+											><span>LOGOUT_<wbr />PATH?</span></a
+										>
+										<a href="#user_email" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Property"
+											>
+												<use
+													href="../assets/icons.svg#icon-1024"
+												></use></svg
+											><span>USER_<wbr />EMAIL?</span></a
+										>
+										<a href="#user_password" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Property"
+											>
+												<use
+													href="../assets/icons.svg#icon-1024"
+												></use></svg
+											><span>USER_<wbr />PASSWORD?</span></a
+										>
+									</div>
+								</section>
+							</div>
+						</details>
+					</section>
+				</section>
+				<details class="tsd-panel-group tsd-member-group tsd-accordion" open>
+					<summary class="tsd-accordion-summary" data-key="section-Properties">
+						<svg
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+							aria-hidden="true"
+						>
+							<use href="../assets/icons.svg#icon-chevronDown"></use>
+						</svg>
+						<h2>Properties</h2>
+					</summary>
+					<section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="base_url">
+								<span>BASE_<wbr />URL</span
+								><a href="#base_url" aria-label="Permalink" class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<div class="tsd-signature">
+								<span class="tsd-kind-property">BASE_URL</span
+								><span class="tsd-signature-symbol">:</span>
+								<span class="tsd-signature-type">string</span>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<p>Base URL of the target server.</p>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<div class="tsd-tag-remarks">
+									<h4 class="tsd-anchor-link" id="remarks-1">
+										Remarks<a
+											href="#remarks-1"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</h4>
+									<p>
+										Must be a valid HTTP or HTTPS URL (e.g.,
+										<code>http://localhost:3000</code> or
+										<code>https://api.example.com</code>).<br />
+										This field is <strong>required</strong>; if missing,
+										<a
+											href="../functions/loadEnv.html"
+											class="tsd-kind-function"
+											>loadEnv</a
+										>
+										will throw an error.
+									</p>
+								</div>
+							</div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>
+										Defined in
+										<a
+											href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/handler/env.ts#L49"
+											>handler/env.ts:49</a
+										>
+									</li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="login_path">
+								<code class="tsd-tag">Optional</code><span>LOGIN_<wbr />PATH</span
+								><a
+									href="#login_path"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<div class="tsd-signature">
+								<span class="tsd-kind-property">LOGIN_PATH</span
+								><span class="tsd-signature-symbol">?:</span>
+								<span class="tsd-signature-type">string</span>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<p>
+									Path to the login endpoint, relative to <code>BASE_URL</code>.
+								</p>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<div class="tsd-tag-defaultValue">
+									<h4 class="tsd-anchor-link" id="default-value">
+										Default Value<a
+											href="#default-value"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</h4>
+									<pre><code class="ts"><span class="hl-3">&quot;login&quot;</span>
+</code><button type="button">Copy</button></pre>
+								</div>
+								<div class="tsd-tag-remarks">
+									<h4 class="tsd-anchor-link" id="remarks-2">
+										Remarks<a
+											href="#remarks-2"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</h4>
+									<p>
+										If provided, it must not be an empty string and must not
+										contain <code>?</code> or <code>#</code>.<br />
+										Leading slashes are automatically removed by
+										<a href="../classes/EnvConfig.html" class="tsd-kind-class"
+											>EnvConfig</a
+										>.
+									</p>
+								</div>
+							</div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>
+										Defined in
+										<a
+											href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/handler/env.ts#L59"
+											>handler/env.ts:59</a
+										>
+									</li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="logout_path">
+								<code class="tsd-tag">Optional</code><span>LOGOUT_<wbr />PATH</span
+								><a
+									href="#logout_path"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<div class="tsd-signature">
+								<span class="tsd-kind-property">LOGOUT_PATH</span
+								><span class="tsd-signature-symbol">?:</span>
+								<span class="tsd-signature-type">string</span>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<p>
+									Path to the logout endpoint, relative to <code>BASE_URL</code>.
+								</p>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<div class="tsd-tag-defaultValue">
+									<h4 class="tsd-anchor-link" id="default-value-1">
+										Default Value<a
+											href="#default-value-1"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</h4>
+									<pre><code class="ts"><span class="hl-3">&quot;logout&quot;</span>
+</code><button type="button">Copy</button></pre>
+								</div>
+								<div class="tsd-tag-remarks">
+									<h4 class="tsd-anchor-link" id="remarks-3">
+										Remarks<a
+											href="#remarks-3"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</h4>
+									<p>
+										If provided, it must not be an empty string and must not
+										contain <code>?</code> or <code>#</code>.<br />
+										Leading slashes are automatically removed by
+										<a href="../classes/EnvConfig.html" class="tsd-kind-class"
+											>EnvConfig</a
+										>.
+									</p>
+								</div>
+							</div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>
+										Defined in
+										<a
+											href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/handler/env.ts#L69"
+											>handler/env.ts:69</a
+										>
+									</li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="user_email">
+								<code class="tsd-tag">Optional</code><span>USER_<wbr />EMAIL</span
+								><a
+									href="#user_email"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<div class="tsd-signature">
+								<span class="tsd-kind-property">USER_EMAIL</span
+								><span class="tsd-signature-symbol">?:</span>
+								<span class="tsd-signature-type">string</span>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<p>User email address for authentication.</p>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<div class="tsd-tag-remarks">
+									<h4 class="tsd-anchor-link" id="remarks-4">
+										Remarks<a
+											href="#remarks-4"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</h4>
+									<p>
+										If provided and non‑empty, it must be a syntactically valid
+										email address<br />
+										(basic format <code>local@domain.tld</code>). Empty strings
+										are treated as omitted.
+									</p>
+								</div>
+							</div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>
+										Defined in
+										<a
+											href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/handler/env.ts#L78"
+											>handler/env.ts:78</a
+										>
+									</li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="user_password">
+								<code class="tsd-tag">Optional</code
+								><span>USER_<wbr />PASSWORD</span
+								><a
+									href="#user_password"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<div class="tsd-signature">
+								<span class="tsd-kind-property">USER_PASSWORD</span
+								><span class="tsd-signature-symbol">?:</span>
+								<span class="tsd-signature-type">string</span>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<p>User password for authentication.</p>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<div class="tsd-tag-remarks">
+									<h4 class="tsd-anchor-link" id="remarks-5">
+										Remarks<a
+											href="#remarks-5"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</h4>
+									<p>
+										If provided, it cannot be an empty string. No other
+										validation is performed.
+									</p>
+								</div>
+							</div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>
+										Defined in
+										<a
+											href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/handler/env.ts#L86"
+											>handler/env.ts:86</a
+										>
+									</li>
+								</ul>
+							</aside>
+						</section>
+					</section>
+				</details>
+			</div>
+			<div class="col-sidebar">
+				<div class="page-menu">
+					<div class="tsd-navigation settings">
+						<details class="tsd-accordion">
+							<summary class="tsd-accordion-summary">
+								<svg
+									width="20"
+									height="20"
+									viewBox="0 0 24 24"
+									fill="none"
+									aria-hidden="true"
+								>
+									<use href="../assets/icons.svg#icon-chevronDown"></use>
+								</svg>
+								<h3>Settings</h3>
+							</summary>
+							<div class="tsd-accordion-details">
+								<div class="tsd-filter-visibility">
+									<span class="settings-label">Member Visibility</span>
+									<ul id="tsd-filter-options">
+										<li class="tsd-filter-item">
+											<label class="tsd-filter-input"
+												><input
+													type="checkbox"
+													id="tsd-filter-protected"
+													name="protected"
+												/><svg
+													width="32"
+													height="32"
+													viewBox="0 0 32 32"
+													aria-hidden="true"
+												>
+													<rect
+														class="tsd-checkbox-background"
+														width="30"
+														height="30"
+														x="1"
+														y="1"
+														rx="6"
+														fill="none"
+													></rect>
+													<path
+														class="tsd-checkbox-checkmark"
+														d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25"
+														stroke="none"
+														stroke-width="3.5"
+														stroke-linejoin="round"
+														fill="none"
+													></path></svg
+												><span>Protected</span></label
+											>
+										</li>
+										<li class="tsd-filter-item">
+											<label class="tsd-filter-input"
+												><input
+													type="checkbox"
+													id="tsd-filter-inherited"
+													name="inherited"
+													checked
+												/><svg
+													width="32"
+													height="32"
+													viewBox="0 0 32 32"
+													aria-hidden="true"
+												>
+													<rect
+														class="tsd-checkbox-background"
+														width="30"
+														height="30"
+														x="1"
+														y="1"
+														rx="6"
+														fill="none"
+													></rect>
+													<path
+														class="tsd-checkbox-checkmark"
+														d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25"
+														stroke="none"
+														stroke-width="3.5"
+														stroke-linejoin="round"
+														fill="none"
+													></path></svg
+												><span>Inherited</span></label
+											>
+										</li>
+									</ul>
+								</div>
+								<div class="tsd-theme-toggle">
+									<label class="settings-label" for="tsd-theme">Theme</label
+									><select id="tsd-theme">
+										<option value="os">OS</option>
+										<option value="light">Light</option>
+										<option value="dark">Dark</option>
+									</select>
+								</div>
+							</div>
+						</details>
+					</div>
+					<details open class="tsd-accordion tsd-page-navigation">
+						<summary class="tsd-accordion-summary">
+							<svg
+								width="20"
+								height="20"
+								viewBox="0 0 24 24"
+								fill="none"
+								aria-hidden="true"
+							>
+								<use href="../assets/icons.svg#icon-chevronDown"></use>
+							</svg>
+							<h3>On This Page</h3>
+						</summary>
+						<div class="tsd-accordion-details">
+							<details open class="tsd-accordion tsd-page-navigation-section">
+								<summary
+									class="tsd-accordion-summary"
+									data-key="section-Properties"
+								>
+									<svg
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										aria-hidden="true"
+									>
+										<use href="../assets/icons.svg#icon-chevronDown"></use></svg
+									>Properties
+								</summary>
+								<div>
+									<a href="#base_url"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Property"
+										>
+											<use href="../assets/icons.svg#icon-1024"></use></svg
+										><span>BASE_<wbr />URL</span></a
+									><a href="#login_path"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Property"
+										>
+											<use href="../assets/icons.svg#icon-1024"></use></svg
+										><span>LOGIN_<wbr />PATH</span></a
+									><a href="#logout_path"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Property"
+										>
+											<use href="../assets/icons.svg#icon-1024"></use></svg
+										><span>LOGOUT_<wbr />PATH</span></a
+									><a href="#user_email"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Property"
+										>
+											<use href="../assets/icons.svg#icon-1024"></use></svg
+										><span>USER_<wbr />EMAIL</span></a
+									><a href="#user_password"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Property"
+										>
+											<use href="../assets/icons.svg#icon-1024"></use></svg
+										><span>USER_<wbr />PASSWORD</span></a
+									>
+								</div>
+							</details>
+						</div>
+					</details>
+				</div>
+				<div class="site-menu">
+					<nav id="tsd-sidebar-links" class="tsd-navigation">
+						<a
+							href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/changelog.md"
+							>Changelog</a
+						><a
+							href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/contributing.md"
+							>Contributing</a
+						><a
+							href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/code_of_conduct.md"
+							>Code Of Conduct</a
+						><a
+							href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/license"
+							>License</a
+						><a
+							href="https://github.com/neuxdotdev/libts-csrfx-auth"
+							class="tsd-nav-link"
+							>GitHub</a
+						><a
+							href="https://www.npmjs.com/package/libts-csrfx-auth"
+							class="tsd-nav-link"
+							>npm</a
+						>
+					</nav>
+					<nav class="tsd-navigation">
+						<a href="../modules.html">CSRF-X Auth Library - v0.1.1</a>
+						<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+							<li>Loading...</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<p class="tsd-generator">
+				Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>
+			</p>
+		</footer>
+		<div class="overlay"></div>
+	</body>
+</html>

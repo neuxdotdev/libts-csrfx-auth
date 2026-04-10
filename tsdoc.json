@@ -1,0 +1,27 @@
+{
+	"$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
+	"tagDefinitions": [
+		{
+			"tagName": "@packageDocumentation",
+			"syntaxKind": "modifier"
+		},
+		{
+			"tagName": "@internal",
+			"syntaxKind": "modifier"
+		},
+		{
+			"tagName": "@beta",
+			"syntaxKind": "modifier"
+		},
+		{
+			"tagName": "@example",
+			"syntaxKind": "block"
+		}
+	],
+	"supportForTags": {
+		"@remarks": true,
+		"@see": true,
+		"@defaultValue": true,
+		"@throws": true
+	}
+}

@@ -1,0 +1,1912 @@
+<!doctype html>
+<html class="default" lang="en" data-base="../">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<title>AuthClient | CSRF-X Auth Library - v0.1.1</title>
+		<meta name="description" content="Documentation for CSRF-X Auth Library" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../assets/style.css" />
+		<link rel="stylesheet" href="../assets/highlight.css" />
+		<script defer src="../assets/main.js"></script>
+		<script async src="../assets/icons.js" id="tsd-icons-script"></script>
+		<script async src="../assets/search.js" id="tsd-search-script"></script>
+		<script async src="../assets/navigation.js" id="tsd-nav-script"></script>
+	</head>
+	<body>
+		<script>
+			document.documentElement.dataset.theme = localStorage.getItem('tsd-theme') || 'os'
+			document.body.style.display = 'none'
+			setTimeout(
+				() => (window.app ? app.showPage() : document.body.style.removeProperty('display')),
+				500,
+			)
+		</script>
+		<header class="tsd-page-toolbar">
+			<div class="tsd-toolbar-contents container">
+				<a href="../index.html" class="title">CSRF-X Auth Library - v0.1.1</a>
+				<div id="tsd-toolbar-links">
+					<a href="https://github.com/neuxdotdev/libts-csrfx-auth">GitHub</a
+					><a href="https://www.npmjs.com/package/libts-csrfx-auth">npm</a>
+				</div>
+				<button id="tsd-search-trigger" class="tsd-widget" aria-label="Search">
+					<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+						<use href="../assets/icons.svg#icon-search"></use>
+					</svg>
+				</button>
+				<dialog id="tsd-search" aria-label="Search">
+					<input
+						role="combobox"
+						id="tsd-search-input"
+						aria-controls="tsd-search-results"
+						aria-autocomplete="list"
+						aria-expanded="true"
+						autocapitalize="off"
+						autocomplete="off"
+						placeholder="Search the docs"
+						maxlength="100"
+					/>
+					<ul role="listbox" id="tsd-search-results"></ul>
+					<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+						<div>Preparing search index...</div>
+					</div>
+				</dialog>
+				<a
+					href="#"
+					class="tsd-widget menu"
+					id="tsd-toolbar-menu-trigger"
+					data-toggle="menu"
+					aria-label="Menu"
+					><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+						<use href="../assets/icons.svg#icon-menu"></use></svg
+				></a>
+			</div>
+		</header>
+		<div class="container container-main">
+			<div class="col-content">
+				<div class="tsd-page-title">
+					<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+						<li><a href="" aria-current="page">AuthClient</a></li>
+					</ul>
+					<h1>Class AuthClient</h1>
+				</div>
+				<section class="tsd-panel tsd-comment">
+					<div class="tsd-comment tsd-typography">
+						<p>Client for automating login against CSRF‑protected web applications.</p>
+					</div>
+					<div class="tsd-comment tsd-typography">
+						<div class="tsd-tag-remarks">
+							<h4 class="tsd-anchor-link" id="remarks">
+								Remarks<a
+									href="#remarks"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<p>The client performs a two‑step login process:</p>
+							<ol>
+								<li>
+									<strong>GET</strong> the login page to extract a CSRF token and
+									capture any initial cookies.
+								</li>
+								<li>
+									<strong>POST</strong> the credentials together with the CSRF
+									token to authenticate.
+								</li>
+							</ol>
+							<p>
+								After successful login, the session (cookies, CSRF token, timestamp)
+								is saved<br />
+								to disk. Subsequent calls can reuse the cached session without
+								re‑authenticating.
+							</p>
+							<p>
+								The client is configurable via environment variables (<code
+									>.env</code
+								>
+								file) or constructor<br />
+								options. It supports retries with exponential backoff, timeouts, and
+								optional<br />
+								<code>Referer</code>/<code>Origin</code> headers for servers that
+								require them.
+							</p>
+							<p><strong>Session caching:</strong></p>
+							<ul>
+								<li>
+									Cache location:
+									<code>~/.cache/libts-csrfx-auth/session.json</code>
+									(configurable)
+								</li>
+								<li>
+									Session freshness: 1 hour by default (see
+									<a href="#hasvalidsession" class="tsd-kind-method"
+										>hasValidSession</a
+									>)
+								</li>
+								<li>
+									Use
+									<a href="#clearsession" class="tsd-kind-method">clearSession</a>
+									to remove cached credentials.
+								</li>
+							</ul>
+						</div>
+						<div class="tsd-tag-example">
+							<h4 class="tsd-anchor-link" id="example">
+								Example<a
+									href="#example"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<pre><code class="ts"><span class="hl-0">// Basic usage with environment variables</span><br/><span class="hl-6">const</span><span class="hl-2"> </span><span class="hl-7">auth</span><span class="hl-2"> = </span><span class="hl-6">new</span><span class="hl-2"> </span><span class="hl-1">AuthClient</span><span class="hl-2">();</span><br/><span class="hl-6">const</span><span class="hl-2"> </span><span class="hl-7">session</span><span class="hl-2"> = </span><span class="hl-4">await</span><span class="hl-2"> </span><span class="hl-5">auth</span><span class="hl-2">.</span><span class="hl-1">login</span><span class="hl-2">();</span><br/><span class="hl-5">console</span><span class="hl-2">.</span><span class="hl-1">log</span><span class="hl-2">(</span><span class="hl-3">&#39;Logged in, CSRF token:&#39;</span><span class="hl-2">, </span><span class="hl-5">session</span><span class="hl-2">.</span><span class="hl-5">csrfToken</span><span class="hl-2">);</span>
+</code><button type="button">Copy</button></pre>
+						</div>
+						<div class="tsd-tag-example">
+							<h4 class="tsd-anchor-link" id="example-1">
+								Example<a
+									href="#example-1"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<pre><code class="ts"><span class="hl-0">// Override credentials and use custom cache directory</span><br/><span class="hl-6">const</span><span class="hl-2"> </span><span class="hl-7">auth</span><span class="hl-2"> = </span><span class="hl-6">new</span><span class="hl-2"> </span><span class="hl-1">AuthClient</span><span class="hl-2">({</span><br/><span class="hl-2">  </span><span class="hl-5">email:</span><span class="hl-2"> </span><span class="hl-3">&#39;user@example.com&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-5">password:</span><span class="hl-2"> </span><span class="hl-3">&#39;secret&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-5">cacheDir:</span><span class="hl-2"> </span><span class="hl-3">&#39;./my-cache&#39;</span><br/><span class="hl-2">});</span>
+</code><button type="button">Copy</button></pre>
+						</div>
+						<div class="tsd-tag-example">
+							<h4 class="tsd-anchor-link" id="example-2">
+								Example<a
+									href="#example-2"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<pre><code class="ts"><span class="hl-0">// Check cached session before logging in</span><br/><span class="hl-4">if</span><span class="hl-2"> (</span><span class="hl-4">await</span><span class="hl-2"> </span><span class="hl-5">auth</span><span class="hl-2">.</span><span class="hl-1">hasValidSession</span><span class="hl-2">()) {</span><br/><span class="hl-2">  </span><span class="hl-6">const</span><span class="hl-2"> </span><span class="hl-7">session</span><span class="hl-2"> = </span><span class="hl-4">await</span><span class="hl-2"> </span><span class="hl-5">auth</span><span class="hl-2">.</span><span class="hl-1">getCachedSession</span><span class="hl-2">();</span><br/><span class="hl-2">  </span><span class="hl-0">// use session...</span><br/><span class="hl-2">} </span><span class="hl-4">else</span><span class="hl-2"> {</span><br/><span class="hl-2">  </span><span class="hl-4">await</span><span class="hl-2"> </span><span class="hl-5">auth</span><span class="hl-2">.</span><span class="hl-1">login</span><span class="hl-2">();</span><br/><span class="hl-2">}</span><br/><br/><span class="hl-2">@</span><span class="hl-5">public</span>
+</code><button type="button">Copy</button></pre>
+						</div>
+						<div class="tsd-tag-since">
+							<h4 class="tsd-anchor-link" id="since">
+								Since<a href="#since" aria-label="Permalink" class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<p>0.1.1</p>
+						</div>
+						<div class="tsd-tag-see">
+							<h4 class="tsd-anchor-link" id="see">
+								See<a href="#see" aria-label="Permalink" class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h4>
+							<ul>
+								<li>
+									<a href="LogoutClient.html" class="tsd-kind-class"
+										>LogoutClient</a
+									>
+									For terminating the session.
+								</li>
+								<li>
+									<a href="EnvConfig.html" class="tsd-kind-class">EnvConfig</a>
+									For configuration validation.
+								</li>
+								<li>
+									<a href="CacheManager.html" class="tsd-kind-class"
+										>CacheManager</a
+									>
+									For disk caching details.
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<aside class="tsd-sources">
+					<ul>
+						<li>
+							Defined in
+							<a
+								href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/auth/login.ts#L166"
+								>auth/login.ts:166</a
+							>
+						</li>
+					</ul>
+				</aside>
+				<section class="tsd-panel-group tsd-index-group">
+					<section class="tsd-panel tsd-index-panel">
+						<details class="tsd-index-content tsd-accordion" open>
+							<summary class="tsd-accordion-summary tsd-index-summary">
+								<svg
+									width="20"
+									height="20"
+									viewBox="0 0 24 24"
+									fill="none"
+									aria-hidden="true"
+								>
+									<use href="../assets/icons.svg#icon-chevronDown"></use>
+								</svg>
+								<h5 class="tsd-index-heading uppercase">Index</h5>
+							</summary>
+							<div class="tsd-accordion-details">
+								<section class="tsd-index-section">
+									<h3 class="tsd-index-heading">Accessors</h3>
+									<div class="tsd-index-list">
+										<a href="#cachefilepath" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Accessor"
+											>
+												<use
+													href="../assets/icons.svg#icon-262144"
+												></use></svg
+											><span>cache<wbr />File<wbr />Path</span></a
+										>
+										<a href="#configref" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Accessor"
+											>
+												<use
+													href="../assets/icons.svg#icon-262144"
+												></use></svg
+											><span>config<wbr />Ref</span></a
+										>
+									</div>
+								</section>
+								<section class="tsd-index-section">
+									<h3 class="tsd-index-heading">Constructors</h3>
+									<div class="tsd-index-list">
+										<a href="#constructor" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Constructor"
+											>
+												<use href="../assets/icons.svg#icon-512"></use></svg
+											><span>constructor</span></a
+										>
+									</div>
+								</section>
+								<section class="tsd-index-section">
+									<h3 class="tsd-index-heading">Methods</h3>
+									<div class="tsd-index-list">
+										<a href="#login" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Method"
+											>
+												<use
+													href="../assets/icons.svg#icon-2048"
+												></use></svg
+											><span>login</span></a
+										>
+										<a href="#getcachedsession" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Method"
+											>
+												<use
+													href="../assets/icons.svg#icon-2048"
+												></use></svg
+											><span>get<wbr />Cached<wbr />Session</span></a
+										>
+										<a href="#hasvalidsession" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Method"
+											>
+												<use
+													href="../assets/icons.svg#icon-2048"
+												></use></svg
+											><span>has<wbr />Valid<wbr />Session</span></a
+										>
+										<a href="#clearsession" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Method"
+											>
+												<use
+													href="../assets/icons.svg#icon-2048"
+												></use></svg
+											><span>clear<wbr />Session</span></a
+										>
+									</div>
+								</section>
+								<section class="tsd-index-section">
+									<h3 class="tsd-index-heading">Properties</h3>
+									<div class="tsd-index-list">
+										<a href="#config" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Property"
+											>
+												<use
+													href="../assets/icons.svg#icon-1024"
+												></use></svg
+											><span>config</span></a
+										>
+										<a href="#cachemanager" class="tsd-index-link"
+											><svg
+												class="tsd-kind-icon"
+												viewBox="0 0 24 24"
+												aria-label="Property"
+											>
+												<use
+													href="../assets/icons.svg#icon-1024"
+												></use></svg
+											><span>cache<wbr />Manager</span></a
+										>
+									</div>
+								</section>
+							</div>
+						</details>
+					</section>
+				</section>
+				<details class="tsd-panel-group tsd-member-group tsd-accordion" open>
+					<summary class="tsd-accordion-summary" data-key="section-Accessors">
+						<svg
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+							aria-hidden="true"
+						>
+							<use href="../assets/icons.svg#icon-chevronDown"></use>
+						</svg>
+						<h2>Accessors</h2>
+					</summary>
+					<section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="cachefilepath">
+								<span>cache<wbr />File<wbr />Path</span
+								><a
+									href="#cachefilepath"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<ul class="tsd-signatures">
+								<li>
+									<div class="tsd-signature" id="cachefilepathcachefilepath">
+										<span class="tsd-signature-keyword">get</span>
+										<span class="tsd-kind-get-signature">cacheFilePath</span
+										><span class="tsd-signature-symbol">()</span
+										><span class="tsd-signature-symbol">:</span>
+										<span class="tsd-signature-type">string</span>
+									</div>
+									<div class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+											<p>
+												Returns the filesystem path where the session cache
+												is stored.
+											</p>
+										</div>
+										<h4 class="tsd-returns-title">
+											Returns <span class="tsd-signature-type">string</span>
+										</h4>
+										<div class="tsd-comment tsd-typography">
+											<div class="tsd-tag-remarks">
+												<h4 class="tsd-anchor-link" id="remarks-1">
+													Remarks<a
+														href="#remarks-1"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													Useful for debugging or manual inspection.
+													Example:<br />
+													<code
+														>&quot;/home/user/.cache/libts-csrfx-auth/session.json&quot;</code
+													>
+												</p>
+											</div>
+										</div>
+										<aside class="tsd-sources">
+											<ul>
+												<li>
+													Defined in
+													<a
+														href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/auth/login.ts#L402"
+														>auth/login.ts:402</a
+													>
+												</li>
+											</ul>
+										</aside>
+									</div>
+								</li>
+							</ul>
+						</section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="configref">
+								<span>config<wbr />Ref</span
+								><a href="#configref" aria-label="Permalink" class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<ul class="tsd-signatures">
+								<li>
+									<div class="tsd-signature" id="configrefconfigref">
+										<span class="tsd-signature-keyword">get</span>
+										<span class="tsd-kind-get-signature">configRef</span
+										><span class="tsd-signature-symbol">()</span
+										><span class="tsd-signature-symbol">:</span>
+										<a
+											href="EnvConfig.html"
+											class="tsd-signature-type tsd-kind-class"
+											>EnvConfig</a
+										>
+									</div>
+									<div class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+											<p>
+												Returns the internal <code>EnvConfig</code> instance
+												for advanced inspection.
+											</p>
+										</div>
+										<h4 class="tsd-returns-title">
+											Returns
+											<a
+												href="EnvConfig.html"
+												class="tsd-signature-type tsd-kind-class"
+												>EnvConfig</a
+											>
+										</h4>
+										<div class="tsd-comment tsd-typography">
+											<div class="tsd-tag-remarks">
+												<h4 class="tsd-anchor-link" id="remarks-2">
+													Remarks<a
+														href="#remarks-2"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													Provides access to the normalized configuration,
+													including base URL,<br />
+													login path, email, and password (if set).
+												</p>
+											</div>
+										</div>
+										<aside class="tsd-sources">
+											<ul>
+												<li>
+													Defined in
+													<a
+														href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/auth/login.ts#L413"
+														>auth/login.ts:413</a
+													>
+												</li>
+											</ul>
+										</aside>
+									</div>
+								</li>
+							</ul>
+						</section>
+					</section>
+				</details>
+				<details class="tsd-panel-group tsd-member-group tsd-accordion" open>
+					<summary class="tsd-accordion-summary" data-key="section-Constructors">
+						<svg
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+							aria-hidden="true"
+						>
+							<use href="../assets/icons.svg#icon-chevronDown"></use>
+						</svg>
+						<h2>Constructors</h2>
+					</summary>
+					<section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="constructor">
+								<span>constructor</span
+								><a
+									href="#constructor"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<ul class="tsd-signatures">
+								<li class="">
+									<div
+										class="tsd-signature tsd-anchor-link"
+										id="constructorauthclient"
+									>
+										<span class="tsd-signature-keyword">new</span>
+										<span class="tsd-kind-constructor-signature"
+											>AuthClient</span
+										><span class="tsd-signature-symbol">(</span
+										><span class="tsd-kind-parameter">options</span
+										><span class="tsd-signature-symbol">?:</span>
+										<a
+											href="../interfaces/LoginOptions.html"
+											class="tsd-signature-type tsd-kind-interface"
+											>LoginOptions</a
+										><span class="tsd-signature-symbol">)</span
+										><span class="tsd-signature-symbol">:</span>
+										<a href="" class="tsd-signature-type tsd-kind-class"
+											>AuthClient</a
+										><a
+											href="#constructorauthclient"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</div>
+									<div class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+											<p>Creates a new AuthClient instance.</p>
+										</div>
+										<div class="tsd-parameters">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameter-list">
+												<li>
+													<span
+														><span class="tsd-kind-parameter"
+															>options</span
+														>:
+														<a
+															href="../interfaces/LoginOptions.html"
+															class="tsd-signature-type tsd-kind-interface"
+															>LoginOptions</a
+														><span class="tsd-signature-symbol">
+															= {}</span
+														></span
+													>
+													<div class="tsd-comment tsd-typography">
+														<p>
+															Optional overrides for environment‑based
+															configuration.
+														</p>
+													</div>
+												</li>
+											</ul>
+										</div>
+										<h4 class="tsd-returns-title">
+											Returns
+											<a href="" class="tsd-signature-type tsd-kind-class"
+												>AuthClient</a
+											>
+										</h4>
+										<div class="tsd-comment tsd-typography">
+											<div class="tsd-tag-remarks">
+												<h4 class="tsd-anchor-link" id="remarks-3">
+													Remarks<a
+														href="#remarks-3"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													Configuration is resolved from constructor
+													options first, then from environment<br />
+													variables (<code>.env</code> file or
+													<code>Bun.env</code>). The client is ready to
+													use immediately.<br />
+													No network requests are performed during
+													construction.
+												</p>
+											</div>
+											<div class="tsd-tag-example">
+												<h4 class="tsd-anchor-link" id="example-3">
+													Example<a
+														href="#example-3"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<pre><code class="ts"><span class="hl-0">// Using environment variables only</span><br/><span class="hl-6">const</span><span class="hl-2"> </span><span class="hl-7">auth</span><span class="hl-2"> = </span><span class="hl-6">new</span><span class="hl-2"> </span><span class="hl-1">AuthClient</span><span class="hl-2">();</span>
+</code><button type="button">Copy</button></pre>
+											</div>
+											<div class="tsd-tag-example">
+												<h4 class="tsd-anchor-link" id="example-4">
+													Example<a
+														href="#example-4"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<pre><code class="ts"><span class="hl-0">// Overriding email and password</span><br/><span class="hl-6">const</span><span class="hl-2"> </span><span class="hl-7">auth</span><span class="hl-2"> = </span><span class="hl-6">new</span><span class="hl-2"> </span><span class="hl-1">AuthClient</span><span class="hl-2">({</span><br/><span class="hl-2">  </span><span class="hl-5">email:</span><span class="hl-2"> </span><span class="hl-3">&#39;custom@example.com&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-5">password:</span><span class="hl-2"> </span><span class="hl-3">&#39;override123&#39;</span><br/><span class="hl-2">});</span>
+</code><button type="button">Copy</button></pre>
+											</div>
+										</div>
+										<aside class="tsd-sources">
+											<ul>
+												<li>
+													Defined in
+													<a
+														href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/auth/login.ts#L218"
+														>auth/login.ts:218</a
+													>
+												</li>
+											</ul>
+										</aside>
+									</div>
+								</li>
+							</ul>
+						</section>
+					</section>
+				</details>
+				<details class="tsd-panel-group tsd-member-group tsd-accordion" open>
+					<summary class="tsd-accordion-summary" data-key="section-Methods">
+						<svg
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+							aria-hidden="true"
+						>
+							<use href="../assets/icons.svg#icon-chevronDown"></use>
+						</svg>
+						<h2>Methods</h2>
+					</summary>
+					<section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="login">
+								<span>login</span
+								><a href="#login" aria-label="Permalink" class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<ul class="tsd-signatures">
+								<li class="">
+									<div class="tsd-signature tsd-anchor-link" id="login-1">
+										<span class="tsd-kind-call-signature">login</span
+										><span class="tsd-signature-symbol">()</span
+										><span class="tsd-signature-symbol">:</span>
+										<span class="tsd-signature-type">Promise</span
+										><span class="tsd-signature-symbol">&lt;</span
+										><a
+											href="../interfaces/SessionData.html"
+											class="tsd-signature-type tsd-kind-interface"
+											>SessionData</a
+										><span class="tsd-signature-symbol">&gt;</span
+										><a
+											href="#login-1"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</div>
+									<div class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+											<p>
+												Performs the complete login flow and returns the
+												session data.
+											</p>
+										</div>
+										<h4 class="tsd-returns-title">
+											Returns <span class="tsd-signature-type">Promise</span
+											><span class="tsd-signature-symbol">&lt;</span
+											><a
+												href="../interfaces/SessionData.html"
+												class="tsd-signature-type tsd-kind-interface"
+												>SessionData</a
+											><span class="tsd-signature-symbol">&gt;</span>
+										</h4>
+										<p>
+											The persisted session data (cookies, CSRF token, login
+											flag, timestamp).
+										</p>
+										<div class="tsd-comment tsd-typography">
+											<div class="tsd-tag-throws">
+												<h4 class="tsd-anchor-link" id="throws">
+													Throws<a
+														href="#throws"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													With code <code>INVALID_CREDENTIALS</code> if
+													email or password is missing.
+												</p>
+											</div>
+											<div class="tsd-tag-throws">
+												<h4 class="tsd-anchor-link" id="throws-1">
+													Throws<a
+														href="#throws-1"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													With code <code>CSRF_NOT_FOUND</code> if CSRF
+													token cannot be extracted.
+												</p>
+											</div>
+											<div class="tsd-tag-throws">
+												<h4 class="tsd-anchor-link" id="throws-2">
+													Throws<a
+														href="#throws-2"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													With code <code>CSRF_FETCH_FAILED</code> if the
+													login page request fails.
+												</p>
+											</div>
+											<div class="tsd-tag-throws">
+												<h4 class="tsd-anchor-link" id="throws-3">
+													Throws<a
+														href="#throws-3"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													With code <code>CSRF_EXPIRED</code> on HTTP 419.
+												</p>
+											</div>
+											<div class="tsd-tag-throws">
+												<h4 class="tsd-anchor-link" id="throws-4">
+													Throws<a
+														href="#throws-4"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													With code <code>VALIDATION_ERROR</code> on HTTP
+													422 (invalid credentials).
+												</p>
+											</div>
+											<div class="tsd-tag-throws">
+												<h4 class="tsd-anchor-link" id="throws-5">
+													Throws<a
+														href="#throws-5"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													With code <code>TOO_MANY_REQUESTS</code> on HTTP
+													429.
+												</p>
+											</div>
+											<div class="tsd-tag-throws">
+												<h4 class="tsd-anchor-link" id="throws-6">
+													Throws<a
+														href="#throws-6"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													With code <code>SERVER_ERROR</code> on HTTP 5xx.
+												</p>
+											</div>
+											<div class="tsd-tag-throws">
+												<h4 class="tsd-anchor-link" id="throws-7">
+													Throws<a
+														href="#throws-7"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													With code <code>LOGIN_FAILED</code> for other
+													non‑2xx responses.
+												</p>
+											</div>
+											<div class="tsd-tag-remarks">
+												<h4 class="tsd-anchor-link" id="remarks-4">
+													Remarks<a
+														href="#remarks-4"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p><strong>Steps:</strong></p>
+												<ul>
+													<li>
+														Validates that credentials are present
+														(throws <code>INVALID_CREDENTIALS</code> if
+														missing).
+													</li>
+													<li>
+														Fetches the login page (GET) to obtain a
+														CSRF token and any initial cookies.
+													</li>
+													<li>
+														Builds a POST request with
+														<code>_token</code>, <code>email</code>, and
+														<code>password</code>.
+													</li>
+													<li>
+														Submits the request with cookies from both
+														the cookie jar and cached session.
+													</li>
+													<li>
+														Validates the response (throws appropriate
+														<code>AuthError</code> on failure).
+													</li>
+													<li>
+														Saves the resulting session (cookies, token)
+														to disk cache.
+													</li>
+												</ul>
+												<p>
+													The method uses retries with exponential backoff
+													for transient failures.
+												</p>
+											</div>
+											<div class="tsd-tag-example">
+												<h4 class="tsd-anchor-link" id="example-5">
+													Example<a
+														href="#example-5"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<pre><code class="ts"><span class="hl-6">const</span><span class="hl-2"> </span><span class="hl-7">session</span><span class="hl-2"> = </span><span class="hl-4">await</span><span class="hl-2"> </span><span class="hl-5">auth</span><span class="hl-2">.</span><span class="hl-1">login</span><span class="hl-2">();</span><br/><span class="hl-5">console</span><span class="hl-2">.</span><span class="hl-1">log</span><span class="hl-2">(</span><span class="hl-3">`Logged in at </span><span class="hl-6">${</span><span class="hl-6">new</span><span class="hl-8"> </span><span class="hl-1">Date</span><span class="hl-8">(</span><span class="hl-5">session</span><span class="hl-8">.</span><span class="hl-5">timestamp</span><span class="hl-8">)</span><span class="hl-6">}</span><span class="hl-3">`</span><span class="hl-2">);</span><br/><span class="hl-5">console</span><span class="hl-2">.</span><span class="hl-1">log</span><span class="hl-2">(</span><span class="hl-3">`CSRF token: </span><span class="hl-6">${</span><span class="hl-5">session</span><span class="hl-8">.</span><span class="hl-5">csrfToken</span><span class="hl-6">}</span><span class="hl-3">`</span><span class="hl-2">);</span>
+</code><button type="button">Copy</button></pre>
+											</div>
+											<div class="tsd-tag-see">
+												<h4 class="tsd-anchor-link" id="see-1">
+													See<a
+														href="#see-1"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<ul>
+													<li>
+														<a
+															href="#hasvalidsession"
+															class="tsd-kind-method"
+															>hasValidSession</a
+														>
+														To check for a cached session before logging
+														in.
+													</li>
+													<li>
+														<a
+															href="#clearsession"
+															class="tsd-kind-method"
+															>clearSession</a
+														>
+														To clear the session cache.
+													</li>
+												</ul>
+											</div>
+										</div>
+										<aside class="tsd-sources">
+											<ul>
+												<li>
+													Defined in
+													<a
+														href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/auth/login.ts#L286"
+														>auth/login.ts:286</a
+													>
+												</li>
+											</ul>
+										</aside>
+									</div>
+								</li>
+							</ul>
+						</section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="getcachedsession">
+								<span>get<wbr />Cached<wbr />Session</span
+								><a
+									href="#getcachedsession"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<ul class="tsd-signatures">
+								<li class="">
+									<div
+										class="tsd-signature tsd-anchor-link"
+										id="getcachedsession-1"
+									>
+										<span class="tsd-kind-call-signature">getCachedSession</span
+										><span class="tsd-signature-symbol">()</span
+										><span class="tsd-signature-symbol">:</span>
+										<span class="tsd-signature-type">Promise</span
+										><span class="tsd-signature-symbol">&lt;</span
+										><a
+											href="../interfaces/SessionData.html"
+											class="tsd-signature-type tsd-kind-interface"
+											>SessionData</a
+										>
+										<span class="tsd-signature-symbol">|</span>
+										<span class="tsd-signature-type">null</span
+										><span class="tsd-signature-symbol">&gt;</span
+										><a
+											href="#getcachedsession-1"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</div>
+									<div class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+											<p>
+												Retrieves the cached session from disk without
+												checking freshness.
+											</p>
+										</div>
+										<h4 class="tsd-returns-title">
+											Returns <span class="tsd-signature-type">Promise</span
+											><span class="tsd-signature-symbol">&lt;</span
+											><a
+												href="../interfaces/SessionData.html"
+												class="tsd-signature-type tsd-kind-interface"
+												>SessionData</a
+											>
+											<span class="tsd-signature-symbol">|</span>
+											<span class="tsd-signature-type">null</span
+											><span class="tsd-signature-symbol">&gt;</span>
+										</h4>
+										<p>
+											The stored session, or <code>null</code> if no session
+											exists or the file is corrupted.
+										</p>
+										<div class="tsd-comment tsd-typography">
+											<div class="tsd-tag-remarks">
+												<h4 class="tsd-anchor-link" id="remarks-5">
+													Remarks<a
+														href="#remarks-5"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													This method does <strong>not</strong> validate
+													the age of the session or the
+													<code>loggedIn</code> flag.<br />
+													Use
+													<a
+														href="#hasvalidsession"
+														class="tsd-kind-method"
+														>hasValidSession</a
+													>
+													for freshness and validity checks.
+												</p>
+											</div>
+											<div class="tsd-tag-example">
+												<h4 class="tsd-anchor-link" id="example-6">
+													Example<a
+														href="#example-6"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<pre><code class="ts"><span class="hl-6">const</span><span class="hl-2"> </span><span class="hl-7">session</span><span class="hl-2"> = </span><span class="hl-4">await</span><span class="hl-2"> </span><span class="hl-5">auth</span><span class="hl-2">.</span><span class="hl-1">getCachedSession</span><span class="hl-2">();</span><br/><span class="hl-4">if</span><span class="hl-2"> (</span><span class="hl-5">session</span><span class="hl-2">) </span><span class="hl-5">console</span><span class="hl-2">.</span><span class="hl-1">log</span><span class="hl-2">(</span><span class="hl-3">&#39;Session exists, timestamp:&#39;</span><span class="hl-2">, </span><span class="hl-5">session</span><span class="hl-2">.</span><span class="hl-5">timestamp</span><span class="hl-2">);</span>
+</code><button type="button">Copy</button></pre>
+											</div>
+											<div class="tsd-tag-see">
+												<h4 class="tsd-anchor-link" id="see-2">
+													See<a
+														href="#see-2"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<ul>
+													<li>
+														<a
+															href="#hasvalidsession"
+															class="tsd-kind-method"
+															>hasValidSession</a
+														>
+													</li>
+													<li>
+														<a
+															href="CacheManager.html#load"
+															class="tsd-kind-method"
+															>CacheManager.load</a
+														>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<aside class="tsd-sources">
+											<ul>
+												<li>
+													Defined in
+													<a
+														href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/auth/login.ts#L343"
+														>auth/login.ts:343</a
+													>
+												</li>
+											</ul>
+										</aside>
+									</div>
+								</li>
+							</ul>
+						</section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="hasvalidsession">
+								<span>has<wbr />Valid<wbr />Session</span
+								><a
+									href="#hasvalidsession"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<ul class="tsd-signatures">
+								<li class="">
+									<div
+										class="tsd-signature tsd-anchor-link"
+										id="hasvalidsession-1"
+									>
+										<span class="tsd-kind-call-signature">hasValidSession</span
+										><span class="tsd-signature-symbol">(</span
+										><span class="tsd-kind-parameter">maxAgeMs</span
+										><span class="tsd-signature-symbol">?:</span>
+										<span class="tsd-signature-type">number</span
+										><span class="tsd-signature-symbol">)</span
+										><span class="tsd-signature-symbol">:</span>
+										<span class="tsd-signature-type">Promise</span
+										><span class="tsd-signature-symbol">&lt;</span
+										><span class="tsd-signature-type">boolean</span
+										><span class="tsd-signature-symbol">&gt;</span
+										><a
+											href="#hasvalidsession-1"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</div>
+									<div class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+											<p>
+												Checks whether a valid (fresh and logged‑in) session
+												exists in the cache.
+											</p>
+										</div>
+										<div class="tsd-parameters">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameter-list">
+												<li>
+													<span
+														><span class="tsd-kind-parameter"
+															>maxAgeMs</span
+														>:
+														<span class="tsd-signature-type"
+															>number</span
+														><span class="tsd-signature-symbol">
+															= 3_600_000</span
+														></span
+													>
+													<div class="tsd-comment tsd-typography">
+														<p>Maximum allowed age in milliseconds.</p>
+													</div>
+												</li>
+											</ul>
+										</div>
+										<h4 class="tsd-returns-title">
+											Returns <span class="tsd-signature-type">Promise</span
+											><span class="tsd-signature-symbol">&lt;</span
+											><span class="tsd-signature-type">boolean</span
+											><span class="tsd-signature-symbol">&gt;</span>
+										</h4>
+										<p>
+											<code>true</code> if a cached session exists, is fresh,
+											and <code>loggedIn</code> is <code>true</code>.
+										</p>
+										<div class="tsd-comment tsd-typography">
+											<div class="tsd-tag-defaultValue">
+												<h4 class="tsd-anchor-link" id="default-value">
+													Default Value<a
+														href="#default-value"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<pre><code class="ts"><span class="hl-5">maxAgeMs</span><span class="hl-2"> = </span><span class="hl-10">3_600_000</span><span class="hl-2"> (</span><span class="hl-10">1</span><span class="hl-2"> </span><span class="hl-5">hour</span><span class="hl-2">)</span>
+</code><button type="button">Copy</button></pre>
+											</div>
+											<div class="tsd-tag-remarks">
+												<h4 class="tsd-anchor-link" id="remarks-6">
+													Remarks<a
+														href="#remarks-6"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>A session is considered valid if:</p>
+												<ul>
+													<li>It exists on disk.</li>
+													<li>
+														Its <code>loggedIn</code> property is
+														<code>true</code>.
+													</li>
+													<li>
+														Its age (<code
+															>Date.now() - session.timestamp</code
+														>) is less than <code>maxAgeMs</code>.
+													</li>
+												</ul>
+												<p>
+													This method does <strong>not</strong> contact
+													the server to verify the session.
+												</p>
+											</div>
+											<div class="tsd-tag-example">
+												<h4 class="tsd-anchor-link" id="example-7">
+													Example<a
+														href="#example-7"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<pre><code class="ts"><span class="hl-4">if</span><span class="hl-2"> (</span><span class="hl-4">await</span><span class="hl-2"> </span><span class="hl-5">auth</span><span class="hl-2">.</span><span class="hl-1">hasValidSession</span><span class="hl-2">()) {</span><br/><span class="hl-2">  </span><span class="hl-0">// reuse session without logging in again</span><br/><span class="hl-2">  </span><span class="hl-6">const</span><span class="hl-2"> </span><span class="hl-7">session</span><span class="hl-2"> = </span><span class="hl-4">await</span><span class="hl-2"> </span><span class="hl-5">auth</span><span class="hl-2">.</span><span class="hl-1">getCachedSession</span><span class="hl-2">();</span><br/><span class="hl-2">} </span><span class="hl-4">else</span><span class="hl-2"> {</span><br/><span class="hl-2">  </span><span class="hl-4">await</span><span class="hl-2"> </span><span class="hl-5">auth</span><span class="hl-2">.</span><span class="hl-1">login</span><span class="hl-2">();</span><br/><span class="hl-2">}</span>
+</code><button type="button">Copy</button></pre>
+											</div>
+											<div class="tsd-tag-see">
+												<h4 class="tsd-anchor-link" id="see-3">
+													See<a
+														href="#see-3"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<ul>
+													<li>
+														<a
+															href="#getcachedsession"
+															class="tsd-kind-method"
+															>getCachedSession</a
+														>
+													</li>
+													<li>
+														<a
+															href="CacheManager.html#loadfresh"
+															class="tsd-kind-method"
+															>CacheManager.loadFresh</a
+														>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<aside class="tsd-sources">
+											<ul>
+												<li>
+													Defined in
+													<a
+														href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/auth/login.ts#L374"
+														>auth/login.ts:374</a
+													>
+												</li>
+											</ul>
+										</aside>
+									</div>
+								</li>
+							</ul>
+						</section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="clearsession">
+								<span>clear<wbr />Session</span
+								><a
+									href="#clearsession"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<ul class="tsd-signatures">
+								<li class="">
+									<div class="tsd-signature tsd-anchor-link" id="clearsession-1">
+										<span class="tsd-kind-call-signature">clearSession</span
+										><span class="tsd-signature-symbol">()</span
+										><span class="tsd-signature-symbol">:</span>
+										<span class="tsd-signature-type">Promise</span
+										><span class="tsd-signature-symbol">&lt;</span
+										><span class="tsd-signature-type">void</span
+										><span class="tsd-signature-symbol">&gt;</span
+										><a
+											href="#clearsession-1"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</div>
+									<div class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+											<p>
+												Clears both the in‑memory cookie jar and the
+												persistent session cache.
+											</p>
+										</div>
+										<h4 class="tsd-returns-title">
+											Returns <span class="tsd-signature-type">Promise</span
+											><span class="tsd-signature-symbol">&lt;</span
+											><span class="tsd-signature-type">void</span
+											><span class="tsd-signature-symbol">&gt;</span>
+										</h4>
+										<div class="tsd-comment tsd-typography">
+											<div class="tsd-tag-remarks">
+												<h4 class="tsd-anchor-link" id="remarks-7">
+													Remarks<a
+														href="#remarks-7"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<p>
+													Use this method to completely remove any stored
+													authentication state.<br />
+													After clearing, the next call to
+													<a href="#login" class="tsd-kind-method"
+														>login</a
+													>
+													will start a fresh login flow.
+												</p>
+											</div>
+											<div class="tsd-tag-example">
+												<h4 class="tsd-anchor-link" id="example-8">
+													Example<a
+														href="#example-8"
+														aria-label="Permalink"
+														class="tsd-anchor-icon"
+														><svg
+															viewBox="0 0 24 24"
+															aria-hidden="true"
+														>
+															<use
+																href="../assets/icons.svg#icon-anchor"
+															></use></svg
+													></a>
+												</h4>
+												<pre><code class="ts"><span class="hl-4">await</span><span class="hl-2"> </span><span class="hl-5">auth</span><span class="hl-2">.</span><span class="hl-1">clearSession</span><span class="hl-2">();</span><br/><span class="hl-0">// The next call to `login()` will start fresh.</span>
+</code><button type="button">Copy</button></pre>
+											</div>
+										</div>
+										<aside class="tsd-sources">
+											<ul>
+												<li>
+													Defined in
+													<a
+														href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/auth/login.ts#L390"
+														>auth/login.ts:390</a
+													>
+												</li>
+											</ul>
+										</aside>
+									</div>
+								</li>
+							</ul>
+						</section>
+					</section>
+				</details>
+				<details class="tsd-panel-group tsd-member-group tsd-accordion" open>
+					<summary class="tsd-accordion-summary" data-key="section-Properties">
+						<svg
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+							aria-hidden="true"
+						>
+							<use href="../assets/icons.svg#icon-chevronDown"></use>
+						</svg>
+						<h2>Properties</h2>
+					</summary>
+					<section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="config">
+								<code class="tsd-tag">Readonly</code><span>config</span
+								><a href="#config" aria-label="Permalink" class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<div class="tsd-signature">
+								<span class="tsd-kind-property">config</span
+								><span class="tsd-signature-symbol">:</span>
+								<a href="EnvConfig.html" class="tsd-signature-type tsd-kind-class"
+									>EnvConfig</a
+								>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<p>
+									Validated configuration object (base URL, paths, credentials).
+								</p>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<div class="tsd-tag-remarks">
+									<h4 class="tsd-anchor-link" id="remarks-8">
+										Remarks<a
+											href="#remarks-8"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</h4>
+									<p>
+										Contains normalized and validated values from environment
+										variables<br />
+										and constructor overrides. Read‑only after construction.
+									</p>
+								</div>
+							</div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>
+										Defined in
+										<a
+											href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/auth/login.ts#L174"
+											>auth/login.ts:174</a
+										>
+									</li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member">
+							<h3 class="tsd-anchor-link" id="cachemanager">
+								<code class="tsd-tag">Readonly</code><span>cache<wbr />Manager</span
+								><a
+									href="#cachemanager"
+									aria-label="Permalink"
+									class="tsd-anchor-icon"
+									><svg viewBox="0 0 24 24" aria-hidden="true">
+										<use href="../assets/icons.svg#icon-anchor"></use></svg
+								></a>
+							</h3>
+							<div class="tsd-signature">
+								<span class="tsd-kind-property">cacheManager</span
+								><span class="tsd-signature-symbol">:</span>
+								<a
+									href="CacheManager.html"
+									class="tsd-signature-type tsd-kind-class"
+									>CacheManager</a
+								>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<p>Disk cache manager for persisting session data.</p>
+							</div>
+							<div class="tsd-comment tsd-typography">
+								<div class="tsd-tag-remarks">
+									<h4 class="tsd-anchor-link" id="remarks-9">
+										Remarks<a
+											href="#remarks-9"
+											aria-label="Permalink"
+											class="tsd-anchor-icon"
+											><svg viewBox="0 0 24 24" aria-hidden="true">
+												<use
+													href="../assets/icons.svg#icon-anchor"
+												></use></svg
+										></a>
+									</h4>
+									<p>
+										Handles saving, loading, and clearing session data from the
+										file system.<br />
+										The cache file path can be obtained via
+										<a href="#cachefilepath" class="tsd-kind-accessor"
+											>cacheFilePath</a
+										>.
+									</p>
+								</div>
+							</div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>
+										Defined in
+										<a
+											href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/lib/auth/login.ts#L183"
+											>auth/login.ts:183</a
+										>
+									</li>
+								</ul>
+							</aside>
+						</section>
+					</section>
+				</details>
+			</div>
+			<div class="col-sidebar">
+				<div class="page-menu">
+					<div class="tsd-navigation settings">
+						<details class="tsd-accordion">
+							<summary class="tsd-accordion-summary">
+								<svg
+									width="20"
+									height="20"
+									viewBox="0 0 24 24"
+									fill="none"
+									aria-hidden="true"
+								>
+									<use href="../assets/icons.svg#icon-chevronDown"></use>
+								</svg>
+								<h3>Settings</h3>
+							</summary>
+							<div class="tsd-accordion-details">
+								<div class="tsd-filter-visibility">
+									<span class="settings-label">Member Visibility</span>
+									<ul id="tsd-filter-options">
+										<li class="tsd-filter-item">
+											<label class="tsd-filter-input"
+												><input
+													type="checkbox"
+													id="tsd-filter-protected"
+													name="protected"
+												/><svg
+													width="32"
+													height="32"
+													viewBox="0 0 32 32"
+													aria-hidden="true"
+												>
+													<rect
+														class="tsd-checkbox-background"
+														width="30"
+														height="30"
+														x="1"
+														y="1"
+														rx="6"
+														fill="none"
+													></rect>
+													<path
+														class="tsd-checkbox-checkmark"
+														d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25"
+														stroke="none"
+														stroke-width="3.5"
+														stroke-linejoin="round"
+														fill="none"
+													></path></svg
+												><span>Protected</span></label
+											>
+										</li>
+										<li class="tsd-filter-item">
+											<label class="tsd-filter-input"
+												><input
+													type="checkbox"
+													id="tsd-filter-inherited"
+													name="inherited"
+													checked
+												/><svg
+													width="32"
+													height="32"
+													viewBox="0 0 32 32"
+													aria-hidden="true"
+												>
+													<rect
+														class="tsd-checkbox-background"
+														width="30"
+														height="30"
+														x="1"
+														y="1"
+														rx="6"
+														fill="none"
+													></rect>
+													<path
+														class="tsd-checkbox-checkmark"
+														d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25"
+														stroke="none"
+														stroke-width="3.5"
+														stroke-linejoin="round"
+														fill="none"
+													></path></svg
+												><span>Inherited</span></label
+											>
+										</li>
+									</ul>
+								</div>
+								<div class="tsd-theme-toggle">
+									<label class="settings-label" for="tsd-theme">Theme</label
+									><select id="tsd-theme">
+										<option value="os">OS</option>
+										<option value="light">Light</option>
+										<option value="dark">Dark</option>
+									</select>
+								</div>
+							</div>
+						</details>
+					</div>
+					<details open class="tsd-accordion tsd-page-navigation">
+						<summary class="tsd-accordion-summary">
+							<svg
+								width="20"
+								height="20"
+								viewBox="0 0 24 24"
+								fill="none"
+								aria-hidden="true"
+							>
+								<use href="../assets/icons.svg#icon-chevronDown"></use>
+							</svg>
+							<h3>On This Page</h3>
+						</summary>
+						<div class="tsd-accordion-details">
+							<details open class="tsd-accordion tsd-page-navigation-section">
+								<summary class="tsd-accordion-summary" data-key="section-Accessors">
+									<svg
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										aria-hidden="true"
+									>
+										<use href="../assets/icons.svg#icon-chevronDown"></use></svg
+									>Accessors
+								</summary>
+								<div>
+									<a href="#cachefilepath"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Accessor"
+										>
+											<use href="../assets/icons.svg#icon-262144"></use></svg
+										><span>cache<wbr />File<wbr />Path</span></a
+									><a href="#configref"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Accessor"
+										>
+											<use href="../assets/icons.svg#icon-262144"></use></svg
+										><span>config<wbr />Ref</span></a
+									>
+								</div>
+							</details>
+							<details open class="tsd-accordion tsd-page-navigation-section">
+								<summary
+									class="tsd-accordion-summary"
+									data-key="section-Constructors"
+								>
+									<svg
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										aria-hidden="true"
+									>
+										<use href="../assets/icons.svg#icon-chevronDown"></use></svg
+									>Constructors
+								</summary>
+								<div>
+									<a href="#constructor"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Constructor"
+										>
+											<use href="../assets/icons.svg#icon-512"></use></svg
+										><span>constructor</span></a
+									>
+								</div>
+							</details>
+							<details open class="tsd-accordion tsd-page-navigation-section">
+								<summary class="tsd-accordion-summary" data-key="section-Methods">
+									<svg
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										aria-hidden="true"
+									>
+										<use href="../assets/icons.svg#icon-chevronDown"></use></svg
+									>Methods
+								</summary>
+								<div>
+									<a href="#login"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Method"
+										>
+											<use href="../assets/icons.svg#icon-2048"></use></svg
+										><span>login</span></a
+									><a href="#getcachedsession"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Method"
+										>
+											<use href="../assets/icons.svg#icon-2048"></use></svg
+										><span>get<wbr />Cached<wbr />Session</span></a
+									><a href="#hasvalidsession"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Method"
+										>
+											<use href="../assets/icons.svg#icon-2048"></use></svg
+										><span>has<wbr />Valid<wbr />Session</span></a
+									><a href="#clearsession"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Method"
+										>
+											<use href="../assets/icons.svg#icon-2048"></use></svg
+										><span>clear<wbr />Session</span></a
+									>
+								</div>
+							</details>
+							<details open class="tsd-accordion tsd-page-navigation-section">
+								<summary
+									class="tsd-accordion-summary"
+									data-key="section-Properties"
+								>
+									<svg
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										aria-hidden="true"
+									>
+										<use href="../assets/icons.svg#icon-chevronDown"></use></svg
+									>Properties
+								</summary>
+								<div>
+									<a href="#config"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Property"
+										>
+											<use href="../assets/icons.svg#icon-1024"></use></svg
+										><span>config</span></a
+									><a href="#cachemanager"
+										><svg
+											class="tsd-kind-icon"
+											viewBox="0 0 24 24"
+											aria-label="Property"
+										>
+											<use href="../assets/icons.svg#icon-1024"></use></svg
+										><span>cache<wbr />Manager</span></a
+									>
+								</div>
+							</details>
+						</div>
+					</details>
+				</div>
+				<div class="site-menu">
+					<nav id="tsd-sidebar-links" class="tsd-navigation">
+						<a
+							href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/changelog.md"
+							>Changelog</a
+						><a
+							href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/contributing.md"
+							>Contributing</a
+						><a
+							href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/code_of_conduct.md"
+							>Code Of Conduct</a
+						><a
+							href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/license"
+							>License</a
+						><a
+							href="https://github.com/neuxdotdev/libts-csrfx-auth"
+							class="tsd-nav-link"
+							>GitHub</a
+						><a
+							href="https://www.npmjs.com/package/libts-csrfx-auth"
+							class="tsd-nav-link"
+							>npm</a
+						>
+					</nav>
+					<nav class="tsd-navigation">
+						<a href="../modules.html">CSRF-X Auth Library - v0.1.1</a>
+						<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+							<li>Loading...</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<p class="tsd-generator">
+				Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a>
+			</p>
+		</footer>
+		<div class="overlay"></div>
+	</body>
+</html>

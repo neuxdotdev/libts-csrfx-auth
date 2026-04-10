@@ -1,0 +1,90 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"entryPoints": ["./lib/index.ts", "./lib/lib.ts"],
+	"entryPointStrategy": "expand",
+	"out": "./docs",
+	"json": "./docs/api.json",
+	"name": "CSRF-X Auth Library",
+	"includeVersion": true,
+	"excludePrivate": true,
+	"excludeProtected": false,
+	"excludeExternals": true,
+	"excludeNotDocumented": false,
+	"excludeInternal": false,
+	"excludeTags": ["@internal"],
+	"readme": "./readme.md",
+	"plugin": [
+		"typedoc-plugin-rename-defaults",
+		"typedoc-plugin-extras",
+		"typedoc-plugin-missing-exports",
+		"typedoc-plugin-coverage"
+	],
+	"theme": "default",
+	"sort": ["source-order", "kind", "instance-first"],
+	"kindSortOrder": ["Function", "Class", "Interface", "TypeAlias", "Variable", "Enum"],
+	"categorizeByGroup": true,
+	"defaultCategory": "Utilities",
+	"categoryOrder": [
+		"Authentication",
+		"CSRF Protection",
+		"Session Management",
+		"HTTP Helpers",
+		"Cookie Utils",
+		"Error Handling",
+		"Configuration",
+		"Preloader",
+		"Core",
+		"Utilities",
+		"Handlers",
+		"Internal"
+	],
+	"groupOrder": ["Functions", "Classes", "Interfaces", "Type Aliases", "Variables"],
+	"validation": {
+		"notExported": true,
+		"invalidLink": true,
+		"notDocumented": true
+	},
+	"logLevel": "Verbose",
+	"skipErrorChecking": false,
+	"disableSources": false,
+	"sourceLinkTemplate": "https://github.com/neuxdotdev/libts-csrfx-auth/blob/{gitRevision}/{path}#L{line}",
+	"gitRevision": "master",
+	"navigationLinks": {
+		"GitHub": "https://github.com/neuxdotdev/libts-csrfx-auth",
+		"npm": "https://www.npmjs.com/package/libts-csrfx-auth"
+	},
+	"sidebarLinks": {
+		"Changelog": "https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/changelog.md",
+		"Contributing": "https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/contributing.md",
+		"Code Of Conduct": "https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/code_of_conduct.md",
+		"License": "https://github.com/neuxdotdev/libts-csrfx-auth/blob/master/license"
+	},
+	"markdownItOptions": {
+		"html": true,
+		"breaks": true,
+		"linkify": true
+	},
+	"blockTags": [
+		"@remarks",
+		"@example",
+		"@see",
+		"@param",
+		"@returns",
+		"@throws",
+		"@deprecated",
+		"@since"
+	],
+	"inlineTags": ["@link", "@linkcode", "@linkplain"],
+	"modifierTags": [
+		"@public",
+		"@private",
+		"@protected",
+		"@internal",
+		"@beta",
+		"@alpha",
+		"@experimental",
+		"@readonly",
+		"@override",
+		"@virtual"
+	]
+}
