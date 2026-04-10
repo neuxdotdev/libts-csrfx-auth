@@ -167,11 +167,11 @@ The library uses `loadEnv()` to read variables from `.env` (project root) and th
 
 | Variable        | Required | Default  | Validation                                                       |
 | --------------- | -------- | -------- | ---------------------------------------------------------------- |
-| `BASE_URL`      | [x]      | –        | Must be `http://` or `https://`, no trailing slash required.     |
-| `LOGIN_PATH`    | [ ]      | `login`  | No `?` or `#`, cannot be empty string.                           |
-| `LOGOUT_PATH`   | [ ]      | `logout` | No `?` or `#`, cannot be empty string.                           |
-| `USER_EMAIL`    | [ ]      | –        | Basic email regex (`local@domain.tld`). Empty string is ignored. |
-| `USER_PASSWORD` | [ ]      | –        | Cannot be empty string if provided.                              |
+| `BASE_URL`      | <img src="https://img.shields.io/badge/required-yes-green?style=flat-square" alt="required" height="18"> | – | Must be `http://` or `https://` |
+| `LOGIN_PATH`    | <img src="https://img.shields.io/badge/required-no-gray?style=flat-square" alt="optional" height="18"> | `login` | No `?` or `#` |
+| `LOGOUT_PATH`   | <img src="https://img.shields.io/badge/required-no-gray?style=flat-square" alt="optional" height="18"> | `logout` | No `?` or `#` |
+| `USER_EMAIL`    | <img src="https://img.shields.io/badge/required-no-gray?style=flat-square" alt="optional" height="18"> | – | Basic email regex |
+| `USER_PASSWORD` | <img src="https://img.shields.io/badge/required-no-gray?style=flat-square" alt="optional" height="18"> | – | Cannot be empty |
 
 > _`AuthClient` requires both email and password to be non‑empty (throws `INVALID_CREDENTIALS` otherwise)._
 
