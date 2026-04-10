@@ -1,6 +1,6 @@
 {
 	"name": "libts-csrfx-auth",
-	"version": "0.1.1",
+	"version": "1.0.0",
 	"author": "neuxdotdev <neuxdev1@gmail.com>",
 	"repository": {
 		"type": "git",
