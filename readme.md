@@ -2,16 +2,44 @@
 
 > **Minimal TypeScript auth handler for web sessions, CSRF tokens, and cookie persistence — inspired by Rust's cekunit-client.**
 
+
 <p align="center">
-  <a href="https://www.npmjs.com/package/libts-csrfx-auth"><img src="https://img.shields.io/npm/v/libts-csrfx-auth.svg?style=flat-square&logo=npm" alt="npm version"></a>
-  <a href="https://www.npmjs.com/package/libts-csrfx-auth"><img src="https://img.shields.io/npm/dm/libts-csrfx-auth?style=flat-square&logo=npm" alt="npm downloads"></a>
-  <a href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/main/license"><img src="https://img.shields.io/github/license/neuxdotdev/libts-csrfx-auth?style=flat-square" alt="license"></a>
-  <a href="https://github.com/neuxdotdev/libts-csrfx-auth/actions"><img src="https://img.shields.io/github/actions/workflow/status/neuxdotdev/libts-csrfx-auth/build.yml?branch=main&style=flat-square&logo=github" alt="build"></a>
-  <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-6.0-blue?style=flat-square&logo=typescript" alt="TypeScript"></a>
-  <a href="https://bun.sh"><img src="https://img.shields.io/badge/Bun-1.3+-black?style=flat-square&logo=bun" alt="Bun"></a>
-  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/Node-%3E%3D18-green?style=flat-square&logo=node.js" alt="Node"></a>
-  <a href="https://prettier.io"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square&logo=prettier" alt="code style"></a>
-  <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs welcome"></a>
+  <a href="https://www.npmjs.com/package/libts-csrfx-auth" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/npm/v/libts-csrfx-auth.svg?style=flat-square&logo=npm&logoColor=white&color=cb3837" alt="npm version" height="20">
+  </a>
+  <a href="https://github.com/neuxdotdev/libts-csrfx-auth/blob/main/license" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/github/license/neuxdotdev/libts-csrfx-auth?style=flat-square&color=blue" alt="license" height="20">
+  </a>
+  <a href="https://github.com/neuxdotdev/libts-csrfx-auth/actions/workflows/build.yml" target="_blank" rel="noopener">
+    <img src="https://github.com/neuxdotdev/libts-csrfx-auth/actions/workflows/build.yml/badge.svg?branch=main&style=flat-square" alt="build status" height="20">
+  </a>
+  <a href="https://github.com/neuxdotdev/libts-csrfx-auth/actions" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/github/actions/workflow/status/neuxdotdev/libts-csrfx-auth/build.yml?branch=main&style=flat-square&logo=github&logoColor=white" alt="CI" height="20">
+  </a>
+  <a href="https://www.typescriptlang.org" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/badge/TypeScript-5.8+-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" height="20">
+  </a>
+  <a href="https://bun.sh" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/badge/Bun-1.3+-fbf0df?style=flat-square&logo=bun&logoColor=000" alt="Bun" height="20">
+  </a>
+  <a href="https://nodejs.org" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/badge/Node.js-≥18-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js" height="20">
+  </a>
+  <a href="https://prettier.io" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/badge/code_style-prettier-ff69b4?style=flat-square&logo=prettier&logoColor=white" alt="code style" height="20">
+  </a>
+  <a href="http://makeapullrequest.com" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs welcome" height="20">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/libts-csrfx-auth" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/npm/dm/libts-csrfx-auth?style=flat-square&logo=npm&color=cb3837" alt="npm downloads" height="18">
+  </a>
+  <a href="https://bundlephobia.com/package/libts-csrfx-auth" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/bundlephobia/minzip/libts-csrfx-auth?style=flat-square&label=minzipped&color=orange" alt="bundle size" height="18">
+  </a>
 </p>
 
 ---
